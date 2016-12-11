@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>BeagleBone Black Demo</title>
+ 
+    <!-- jQuery and jQuery Mobile -->
+    <link rel="stylesheet" href="stylesheet.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" /> 
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+  
+   <!-- socket.io script -->  
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io('http://localhost');
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+</script>
+
+    <!-- Code for socket.io and device orientation handling -->
+    <script>
+    var socket = io.connect();
+    // Send data through socket
+    function Forw(value){
+      socket.emit('Forw', value);
+    }
+    function Rev(value){
+      socket.emit('Rev', value);
+    }
+    function ledYellow(value){
+      socket.emit('ledYellow', value);
+    }
+    function STOP(value){
+      socket.emit('STOP', value);
+    }
+    function Left(value){
+      socket.emit('Left', value);
+    } 
+    function Right(value){
+      socket.emit('Right', value);
+    }
+    function lights(value){
+      socket.emit('lights', value);
+    }
+    function auger(value){
+      socket.emit('auger', value);
+    }
+     
+     
+    </script>
+</head>
+<body>
+<!-- Home -->
+<div data-role="page" id="page1">
+    <div data-theme="a" data-role="header">
+        <h3>
+            BeagleBone Black
+        </h3>
+    </div>
+    <div data-role="content">
+        
+        <div data-role="fieldcontain">
+           <button onclick="Forw(0)"><img src="images/F-button.jpg"></button> 
+        </div>
+             
+        <div data-role="fieldcontain" >
+            <li> <button   onclick="Left(0)"><img src="images/Left-button.jpg"></button> 
+             <button  onclick="Right(0)"><img src="images/Right-button.jpg"></button></li>
+        </div>
+        
+
+                <div data-role="fieldcontain">
+        <button  onclick="Rev(0)"><img src="images/R-button.jpg"></button>
+        </div>
+        
+        <div data-role="fieldcontain">
+        <button  onclick="STOP(100)"><img src="images/STOP-button.jpg"></button>
+        </div>
+        
+        <div data-role="fieldcontain">
+
+             <button onclick="lights(100)">Lights On</button> 
+             <button onclick="lights(0)">Lights Off</button>
+           
+        </div>
+        
+        <div data-role="fieldcontain">
+
+             <button onclick="auger(100)">Auger On</button> 
+             <button onclick="auger(0)">Auger Off</button>
+           
+        </div>
+        
+           <div data-role="fieldcontain">
+
+             <button onclick="ledYellow(0)">Yellow On</button> 
+             <button onclick="ledYellow(100)">Yellow Off</button>
+           
+        </div>    
+        
+       <div data-role="fieldcontain">
+            <label for="lights">Lights</label>
+            <select name="toggleswitch1" id="Demo" data-theme="b">
+                <option value='off'>Off</option>
+                <option value='on'>On</option>
+            </select>
+    
+        </div>
+        <div data-role="fieldcontain">
+            <label for="auger">Auger</label>
+         <select name="toggleswitch1" id="Demo" data-theme="b" data-role="slider" onchange="demoSwitch(this);">
+                <option value="off">Off</option>
+                <option value="on">On</option>
+            </select>
+        </div> 
+    </div>
+</div>
+</body>
+</html>
